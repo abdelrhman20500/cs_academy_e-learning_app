@@ -1,5 +1,5 @@
 import 'package:cs_academy_e_learning_app/Core/networking/supabase_service.dart';
-import 'package:cs_academy_e_learning_app/Features/auth/presentation/view/login_view.dart';
+import 'package:cs_academy_e_learning_app/Features/layout/presentation/view/layout_view.dart';
 import 'package:flutter/material.dart';
 
 void main() async{
@@ -13,10 +13,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'E_learning App',
-      home: LoginView(),
+      home: LayoutView(),
     );
   }
 }
