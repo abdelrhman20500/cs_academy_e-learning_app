@@ -1,7 +1,10 @@
+import 'package:cs_academy_e_learning_app/Core/networking/supabase_service.dart';
 import 'package:cs_academy_e_learning_app/Features/auth/presentation/view/login_view.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await SupabaseService.init();
   runApp(const MyApp());
 }
 
