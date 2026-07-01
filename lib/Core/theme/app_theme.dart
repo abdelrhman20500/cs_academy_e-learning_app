@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-
-
 abstract class AppTheme{
   static const TextStyle textStyle24 = TextStyle(fontWeight:FontWeight.bold,fontSize: 24.0,
       color: Colors.blue);

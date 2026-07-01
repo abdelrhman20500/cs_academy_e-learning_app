@@ -3,6 +3,8 @@ import 'package:cs_academy_e_learning_app/Core/widgets/custom_bottom.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../../../../Core/Routing/routes.dart';
+
 
 class CoursesCard extends StatelessWidget {
   const CoursesCard({super.key, required this.title, required this.id, required this.imageUrl, required this.description, required this.price,});
@@ -62,7 +64,18 @@ class CoursesCard extends StatelessWidget {
             Text("${price.toString()} EGP",
                 style: const TextStyle(color: Colors.black, fontSize: 17, fontWeight: FontWeight.w600)),
             SizedBox(height:height * 0.012),
-            CustomBottom(text: "Show Details", onPressed: (){},borderRadius: BorderRadius.circular(16.0),)
+            CustomBottom(text: "Show Details", onPressed: ()
+            {
+              Navigator.pushNamed(context, Routes.courseDetailsView,
+                arguments: {
+                  "id": id,
+                  "title": title,
+                  "imageUrl": imageUrl,
+                  "description": description,
+                  "price": price,
+                },
+              );
+            },borderRadius: BorderRadius.circular(16.0),)
           ],
         ),
       ),
