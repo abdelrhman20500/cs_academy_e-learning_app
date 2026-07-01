@@ -4,4 +4,5 @@ class Routes{
   static const String layoutView ="LayoutView";
   static const String courseDetailsView ="CourseDetailsView";
 
+
 }

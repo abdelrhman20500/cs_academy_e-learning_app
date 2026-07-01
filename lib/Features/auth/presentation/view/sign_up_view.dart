@@ -3,6 +3,7 @@ import 'package:cs_academy_e_learning_app/Core/theme/app_theme.dart';
 import 'package:cs_academy_e_learning_app/Core/widgets/custom_bottom.dart';
 import 'package:cs_academy_e_learning_app/Core/widgets/custom_text_form_field.dart';
 import 'package:cs_academy_e_learning_app/Features/auth/data/repo/auth_repo.dart';
+import 'package:cs_academy_e_learning_app/Features/auth/presentation/view/login_view.dart';
 import 'package:cs_academy_e_learning_app/Features/auth/presentation/view/widget/top_logo.dart';
 import 'package:cs_academy_e_learning_app/Features/auth/presentation/view_manager/auth_cubit.dart';
 import 'package:cs_academy_e_learning_app/Features/auth/presentation/view_manager/auth_states.dart';
@@ -96,7 +97,10 @@ class SignUpView extends StatelessWidget {
                                   const Text("Already have an account ?",style: AppTheme.textStyle18,),
                                   SizedBox(width: width*0.02,),
                                   InkWell(
-                                      onTap: (){},
+                                      onTap: (){
+                                        Navigator.push(context, MaterialPageRoute(builder: (context)=>
+                                            LoginView()));
+                                      },
                                       child: Text("Login", style:AppTheme.textStyle20.copyWith(color: Colors.blue) ,)),
                                 ],
                               )
