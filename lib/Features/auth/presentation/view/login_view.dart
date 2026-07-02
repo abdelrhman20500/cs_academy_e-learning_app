@@ -28,7 +28,7 @@ class LoginView extends StatelessWidget {
             if(state is LoginFailure){
               snackBarMessage(context: context, text: state.error);
             }else if(state is LoginSuccess){
-              snackBarMessage(context: context, text: "Login Success");
+              snackBarMessage(context: context,backgroundColor: Colors.green, text: "Login Success");
               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>
               const LayoutView()));
             }
