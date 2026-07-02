@@ -14,11 +14,11 @@ class CourseModel {
 
   factory CourseModel.fromJson(Map<String, dynamic> data) {
     return CourseModel(
-      id: data["id"],
-      title: data["title"],
-      desc: data["desc"],
-      price: data["price"],
-      image: data["image"],
+      id: data["id"]?.toString() ?? '',
+      title: data["title"]?.toString() ?? '',
+      desc: (data["desc"] ?? data["description"])?.toString() ?? '',
+      price: data["price"] ?? 0,
+      image: data["image"]?.toString() ?? '',
     );
   }
 }

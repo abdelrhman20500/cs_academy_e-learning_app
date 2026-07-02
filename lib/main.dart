@@ -1,6 +1,5 @@
 import 'package:cs_academy_e_learning_app/Core/Utilis/simple_bloc_observer.dart';
 import 'package:cs_academy_e_learning_app/Core/networking/supabase_service.dart';
-import 'package:cs_academy_e_learning_app/Features/layout/presentation/view/layout_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

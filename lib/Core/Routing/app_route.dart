@@ -17,6 +17,9 @@ class AppRouter {
       case Routes.courseDetailsView:
         return MaterialPageRoute(builder: (_) => const CourseDetailsView(),
           settings: settings,);
+      // case Routes.courseVideoView:
+      //   return MaterialPageRoute(builder: (_) => const CourseVideoView(),
+      //   settings: settings);
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(

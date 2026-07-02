@@ -12,10 +12,11 @@ class MyCoursesList extends StatelessWidget {
       delegate: SliverChildBuilderDelegate(
             (context, index) {
           return Padding(
-            padding: EdgeInsets.all(4.0),
+            padding: const EdgeInsets.all(4.0),
             child: MyCoursesCard(
               imageUrl: model[index].image,
               title: model[index].title,
+              id: model[index].id,
             ),
           );
         },
