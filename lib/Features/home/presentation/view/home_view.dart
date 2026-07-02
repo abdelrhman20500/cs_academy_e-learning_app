@@ -7,9 +7,33 @@ import 'package:cs_academy_e_learning_app/Features/home/presentation/view_manage
 import 'package:cs_academy_e_learning_app/Features/home/presentation/view_manager/home_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
+
+  Future<String> _getUserName() async {
+    try {
+      final currentUser = Supabase.instance.client.auth.currentUser;
+      if (currentUser == null) return "Guest";
+
+      final metadataName = currentUser.userMetadata?['name'] ?? currentUser.userMetadata?['full_name'];
+      if (metadataName != null) {
+        return metadataName.toString();
+      }
+
+      final response = await Supabase.instance.client
+          .from("users")
+          .select("name")
+          .eq("id", currentUser.id)
+          .maybeSingle();
+
+      if (response != null && response["name"] != null) {
+        return response["name"].toString();
+      }
+    } catch (_) {}
+    return "User";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +53,7 @@ class HomeView extends StatelessWidget {
                       bottomRight: Radius.circular(12.0),
                     ),
                     child: Container(
-                      height: height * 0.2,
+                      height: height * 0.22,
                       decoration: const BoxDecoration(
                         color: AppColors.primaryColor,
                       ),
@@ -38,7 +62,16 @@ class HomeView extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Welcome Ahmed", style: AppTheme.textStyle18.copyWith(color: Colors.white),),
+                            FutureBuilder<String>(
+                              future: _getUserName(),
+                              builder: (context, snapshot) {
+                                final String name = snapshot.data ?? "User";
+                                return Text(
+                                  "Welcome $name",
+                                  style: AppTheme.textStyle18.copyWith(color: Colors.white),
+                                );
+                              },
+                            ),
                             SizedBox(height: height * 0.014),
                             const Text("Welcome To Learning App", style: AppTheme.textStyle22,),
                             SizedBox(height: height * 0.014),

@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cs_academy_e_learning_app/Core/constants/app_color.dart';
 import 'package:cs_academy_e_learning_app/Core/functions/snack_bar_message.dart';
 import 'package:cs_academy_e_learning_app/Core/theme/app_theme.dart';
 import 'package:cs_academy_e_learning_app/Core/widgets/custom_bottom.dart';
@@ -100,7 +101,7 @@ class CourseDetailsView extends StatelessWidget {
                                     : "Enroll Course",
                                 backgroundColor: state is AlreadyEnrollState || state is EnrollSuccess
                                     ? Colors.green
-                                    : Colors.deepPurple,
+                                    : AppColors.primaryColor,
                                 onPressed: () {
                                   if (state is AlreadyEnrollState || state is EnrollSuccess) {
                                     Navigator.push(context, MaterialPageRoute(builder: (context) {

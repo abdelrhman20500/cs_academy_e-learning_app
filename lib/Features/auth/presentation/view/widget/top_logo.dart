@@ -17,10 +17,10 @@ class TopLogo extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text("E_learning", style: TextStyle(
-                color: Colors.blue, fontSize: 24, fontWeight: FontWeight.bold),),
+                color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),),
             const SizedBox(height: 10,),
             Text(text, style: const TextStyle(
-                color: Colors.blue, fontSize: 24, fontWeight: FontWeight.bold),),
+                color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),),
           ],
         )
     );

@@ -1,3 +1,4 @@
+import 'package:cs_academy_e_learning_app/Core/constants/app_color.dart';
 import 'package:cs_academy_e_learning_app/Core/theme/app_theme.dart';
 import 'package:cs_academy_e_learning_app/Features/my_courses/data/repo/my_courses_repo.dart';
 import 'package:cs_academy_e_learning_app/Features/my_courses/presentation/view/widget/my_courses_list.dart';
@@ -15,39 +16,61 @@ class MyCoursesView extends StatelessWidget {
       create: (context) => MyCoursesCubit(MyCoursesRepo())..getMyCourses(),
       child: BlocConsumer<MyCoursesCubit, MyCoursesState>(
         listener: (context, state) {
-          if(state is MyCoursesLoading){
-            const Center(child: CircularProgressIndicator());
-          }
-          if(state is MyCoursesFailure) {
-            print(state.error);
+          if (state is MyCoursesFailure) {
+            debugPrint(state.error);
           }
         },
         builder: (context, state) {
+          Widget child;
+          if (state is MyCoursesLoading) {
+            child = const Center(
+              child: CircularProgressIndicator(
+                color: AppColors.primaryColor,
+              ),
+            );
+          } else if (state is MyCoursesFailure) {
+            child = Center(
+              child: Text(state.error),
+            );
+          } else if (state is MyCoursesSuccess) {
+            child = state.model.isEmpty
+                ? const Center(child: Text("Not Enrolled Courses"))
+                : CustomScrollView(
+                    slivers: [
+                      const SliverToBoxAdapter(
+                        child: SizedBox(height: 4),
+                      ),
+                      SliverToBoxAdapter(
+                        child: Container(
+                          height: 66,
+                          decoration: const BoxDecoration(
+                            color: AppColors.primaryColor,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Completed Courses",
+                                style: AppTheme.textStyle24
+                                    .copyWith(color: Colors.white),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SliverToBoxAdapter(
+                        child: SizedBox(height: 4),
+                      ),
+                      MyCoursesList(model: state.model),
+                    ],
+                  );
+          } else {
+            child = const SizedBox();
+          }
+
           return Container(
             color: Colors.grey.withOpacity(0.3),
-            child: state is MyCoursesSuccess ?
-              state.model.isEmpty ? const Center(child: Text("Not Enrolled Courses")) :
-            CustomScrollView(
-              slivers: [
-                const SliverToBoxAdapter(child: SizedBox(height: 4),),
-                SliverToBoxAdapter(
-                  child: Container(
-                    height: 66,
-                    decoration: const BoxDecoration(
-                      color: Colors.deepPurple,
-                    ),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("Completed Courses", style: AppTheme.textStyle24,),
-                      ],
-                    ),
-                  ),
-                ),
-                const SliverToBoxAdapter(child: SizedBox(height: 4),),
-                MyCoursesList(model: state.model,),
-              ],
-            ): const SizedBox()
+            child: child,
           );
         },
       ),

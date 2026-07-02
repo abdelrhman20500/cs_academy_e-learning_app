@@ -16,7 +16,11 @@ class AuthRepo{
   Future<Either<String, void>> signUp({required String name,
     required String email, required String password})async{
     try {
-      final response = await supabase.auth.signUp(email: email ,password: password);
+      final response = await supabase.auth.signUp(
+        email: email,
+        password: password,
+        data: {'name': name},
+      );
       await saveUserData(name: name, email: email);
       return right(null);
     }on AuthException catch(e){

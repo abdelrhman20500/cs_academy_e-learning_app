@@ -1,3 +1,4 @@
+import 'package:cs_academy_e_learning_app/Core/constants/app_color.dart';
 import 'package:cs_academy_e_learning_app/Core/theme/app_theme.dart';
 import 'package:cs_academy_e_learning_app/Features/course_video/presentation/view/video_player_view.dart';
 import 'package:flutter/material.dart';
@@ -14,28 +15,30 @@ class LessonCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFFF5F0FF),
+        color: AppColors.primaryColor.withOpacity(0.3),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFFE8E0F0), width: 1,),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(title, style: AppTheme.textStyle20,),
-              const SizedBox(height: 4),
-              Text(desc,
-                style:AppTheme.textStyle20,
-                maxLines: 2, overflow: TextOverflow.ellipsis,),
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title, style: AppTheme.textStyle20,),
+                const SizedBox(height: 4),
+                Text(desc,
+                  style:AppTheme.textStyle18,
+                  maxLines: 2, overflow: TextOverflow.ellipsis,),
+              ],
+            ),
           ),
           Container(
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: Colors.deepPurple,
+              color: AppColors.primaryColor,
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(

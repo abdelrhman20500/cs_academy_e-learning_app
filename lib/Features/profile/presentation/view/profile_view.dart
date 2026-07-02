@@ -1,5 +1,7 @@
 import 'package:cs_academy_e_learning_app/Core/Routing/routes.dart';
+import 'package:cs_academy_e_learning_app/Core/constants/app_color.dart';
 import 'package:cs_academy_e_learning_app/Core/functions/snack_bar_message.dart';
+import 'package:cs_academy_e_learning_app/Core/theme/app_theme.dart';
 import 'package:cs_academy_e_learning_app/Features/profile/data/repo/profile_repo.dart';
 import 'package:cs_academy_e_learning_app/Features/profile/presentation/view/widget/profile_list_title.dart';
 import 'package:cs_academy_e_learning_app/Features/profile/presentation/view_manager/profile_cubit.dart';
@@ -50,7 +52,7 @@ class _ProfileViewState extends State<ProfileView> {
                       padding: const EdgeInsets.only(top: 60, bottom: 30, left: 24, right: 24),
                       decoration: const BoxDecoration(
                         gradient: LinearGradient(
-                          colors: [Colors.deepPurple, Colors.indigo],
+                          colors: [AppColors.primaryColor, Colors.indigo],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
@@ -66,7 +68,7 @@ class _ProfileViewState extends State<ProfileView> {
                             backgroundColor: Colors.deepPurple[50],
                             child: Text(
                               nameInitial,
-                              style: const TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: Colors.deepPurple),
+                              style: const TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: AppColors.primaryColor),
                             ),
                           ),
                           const SizedBox(height: 16),
@@ -86,20 +88,20 @@ class _ProfileViewState extends State<ProfileView> {
                         ),
                         child: Column(
                           children: [
-                            const ProfileListTitle(icon:Icons.person,text1: "Account Details",text2: "View your login info",),
+                            ProfileListTitle(icon:Icons.person,text1: "Account Details",text2: "View your login info",),
                             const Divider(height: 1, thickness: 0.5, indent: 64, endIndent: 16),
-                            const ProfileListTitle(icon:Icons.settings,text1: "App Settings",text2:"Preferences and core options",),
+                            ProfileListTitle(icon:Icons.settings,text1: "App Settings",text2:"Preferences and core options",),
                             const Divider(height: 1, thickness: 0.5, indent: 64, endIndent: 16),
                             SwitchListTile(
                               secondary: Container(
                                 padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(color: Colors.grey[100], shape: BoxShape.circle),
-                                child: const Icon(Icons.dark_mode, color: Colors.deepPurple, size: 25),
+                                child: const Icon(Icons.dark_mode, color: AppColors.primaryColor, size: 25),
                               ),
                               title: const Text("Dark Mode", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18)),
                               subtitle: const Text("Toggle interface theme", style: TextStyle(fontSize: 15)),
                               value: _isDarkMode,
-                              activeColor: Colors.deepPurple,
+                              activeColor: AppColors.primaryColor,
                               onChanged: (value) {
                                 setState(() {
                                   _isDarkMode = value;
@@ -107,7 +109,10 @@ class _ProfileViewState extends State<ProfileView> {
                               },
                             ),
                             const Divider(height: 1, thickness: 0.5, indent: 64, endIndent: 16),
-                            const ProfileListTitle(icon:Icons.logout,text1: "Sign Out",text2:"Safely exit your account",),
+                            ProfileListTitle(icon:Icons.logout,text1: "Sign Out",text2:"Safely exit your account",
+                            onTap: (){
+                              _showLogoutDialog(context, context.read<ProfileCubit>());
+                            },),
                           ],
                         ),
                       ),
@@ -119,6 +124,28 @@ class _ProfileViewState extends State<ProfileView> {
             return Container();
           },
         ),
+      ),
+    );
+  }
+  void _showLogoutDialog(BuildContext context, ProfileCubit cubit) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("Logout", style: AppTheme.textStyle20.copyWith(color: AppColors.primaryColor),),
+        content: const Text("Are you sure you want to logout?", style: TextStyle(color: AppColors.primaryColor),),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("Cancel",style: AppTheme.textStyle18,),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              cubit.signOut();
+            },
+            child: const Text("Logout", style: TextStyle(fontSize: 18, color: Colors.red)),
+          ),
+        ],
       ),
     );
   }
