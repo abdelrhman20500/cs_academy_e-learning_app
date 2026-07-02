@@ -1,4 +1,4 @@
-import 'package:cs_academy_e_learning_app/Features/course_video/data/model/course_video_model.dart';
+import 'package:cs_academy_e_learning_app/Core/constants/app_color.dart';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
@@ -14,16 +14,16 @@ class VideoPlayerView extends StatefulWidget {
 
 class _VideoPlayerViewState extends State<VideoPlayerView> {
   late FlickManager flickManager;
+
   @override
   void initState() {
     super.initState();
     flickManager = FlickManager(
-        videoPlayerController:
-        VideoPlayerController.networkUrl(Uri.parse(widget.url),
-        )..initialize().then((onValue){
-          setState(() {
-          });
-        }),
+      videoPlayerController: VideoPlayerController.networkUrl(
+        Uri.parse(widget.url),
+      )..initialize().then((_) {
+        setState(() {});
+      }),
     );
   }
 
@@ -32,21 +32,32 @@ class _VideoPlayerViewState extends State<VideoPlayerView> {
     flickManager.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     final controller = flickManager.flickVideoManager!.videoPlayerController;
     return Scaffold(
-      body:
-      controller == null ? const Center(child: CircularProgressIndicator(),):
-          controller.value.hasError ?const Center(child: Text("something Wrong"),):
-              !controller.value.isInitialized ?
-                  const Center(child: CircularProgressIndicator(),) :
-      Center(
+      appBar: AppBar(
+        backgroundColor: AppColors.primaryColor,
+        elevation: 0,
+        title: const Text(
+          "Course Video", style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),),
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios ,color: Colors.white,),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
+      body: controller == null
+          ? const Center(child: CircularProgressIndicator())
+          : controller.value.hasError
+          ? const Center(child: Text("Something went wrong"))
+          : !controller.value.isInitialized
+          ? const Center(child: CircularProgressIndicator())
+          : Center(
         child: AspectRatio(
           aspectRatio: controller.value.aspectRatio,
-          child: FlickVideoPlayer(
-              flickManager: flickManager
-          ),
+          child: FlickVideoPlayer(flickManager: flickManager),
         ),
       ),
     );

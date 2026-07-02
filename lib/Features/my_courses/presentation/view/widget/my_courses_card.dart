@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cs_academy_e_learning_app/Core/constants/app_color.dart';
 import 'package:cs_academy_e_learning_app/Core/theme/app_theme.dart';
 import 'package:cs_academy_e_learning_app/Features/course_video/presentation/view/course_video_view.dart';
 import 'package:flutter/material.dart';
@@ -35,37 +36,56 @@ class MyCoursesCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: CachedNetworkImage(
-                imageUrl: imageUrl,
-                fit: BoxFit.fill,
-                height: height * 0.16, // Adjust height
-                width:width*0.4, // Full width
-                placeholder: (context, url) => Shimmer.fromColors(
-                  baseColor: Colors.grey[700]!,
-                  highlightColor: Colors.grey[500]!,
-                  child: Container(
-                    height: height * 0.22,
-                    width: double.infinity,
-                    color: Colors.grey,
+              child: imageUrl.isEmpty
+                  ? Container(
+                      height: height * 0.16,
+                      width: width * 0.4,
+                      color: Colors.grey[200],
+                      child: const Icon(Icons.image, color: Colors.grey, size: 40),
+                    )
+                  : CachedNetworkImage(
+                      imageUrl: imageUrl,
+                      fit: BoxFit.fill,
+                      height: height * 0.16, // Adjust height
+                      width: width * 0.4, // Full width
+                      placeholder: (context, url) => Shimmer.fromColors(
+                        baseColor: Colors.grey[700] ?? Colors.grey,
+                        highlightColor: Colors.grey[500] ?? Colors.grey,
+                        child: Container(
+                          height: height * 0.22,
+                          width: double.infinity,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      errorWidget: (context, url, error) => const Icon(Icons.error),
+                    ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    title,
+                    style: AppTheme.textStyle20,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
                   ),
-                ),
-                errorWidget: (context, url, error) =>
-                const Icon(Icons.error),
+                  SizedBox(height: height * 0.02),
+                  CustomBottom(
+                    text: "Complete Course",
+                    borderRadius: BorderRadius.circular(16),
+                    backgroundColor: AppColors.primaryColor,
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return CourseVideoView(courseId: id);
+                      }));
+                    },
+                  ),
+                ],
               ),
             ),
-            Column(
-              children: [
-                Text(title, style: AppTheme.textStyle20,),
-                SizedBox(height: height*0.02,),
-                CustomBottom(text: "Complete Course",
-                  borderRadius: BorderRadius.circular(16), backgroundColor: Colors.deepPurple,
-                  onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context){
-                    return CourseVideoView(courseId: id);
-                  }));
-                  },)
-              ],
-            )
           ],
         ),
       ),

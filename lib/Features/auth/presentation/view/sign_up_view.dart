@@ -1,3 +1,4 @@
+import 'package:cs_academy_e_learning_app/Core/constants/app_color.dart';
 import 'package:cs_academy_e_learning_app/Core/functions/snack_bar_message.dart';
 import 'package:cs_academy_e_learning_app/Core/theme/app_theme.dart';
 import 'package:cs_academy_e_learning_app/Core/widgets/custom_bottom.dart';
@@ -28,7 +29,8 @@ class SignUpView extends StatelessWidget {
         child: BlocConsumer<AuthCubit, AuthState>(
           listener: (context, state) {
             if(state is SignUpFailure){
-              snackBarMessage(context: context, text: state.error);
+              print(state.error);
+              snackBarMessage(context: context, text: state.error,backgroundColor: Colors.red);
             }else if(state is SignUpSuccess){
               snackBarMessage(context: context, text: "SignUp Success", backgroundColor: Colors.green);
               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>
@@ -89,7 +91,7 @@ class SignUpView extends StatelessWidget {
                                       password: passwordController.text.trim()
                                   );
                                 }
-                              },),
+                              },backgroundColor: const Color(0xff013C58),height: 56,),
                               SizedBox(height: height*0.02,),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -101,7 +103,7 @@ class SignUpView extends StatelessWidget {
                                         Navigator.push(context, MaterialPageRoute(builder: (context)=>
                                             LoginView()));
                                       },
-                                      child: Text("Login", style:AppTheme.textStyle20.copyWith(color: Colors.blue) ,)),
+                                      child: Text("Login", style:AppTheme.textStyle20.copyWith(color: AppColors.primaryColor) ,)),
                                 ],
                               )
                             ],

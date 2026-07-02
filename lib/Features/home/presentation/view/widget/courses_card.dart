@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cs_academy_e_learning_app/Core/constants/app_color.dart';
 import 'package:cs_academy_e_learning_app/Core/widgets/custom_bottom.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
@@ -75,7 +76,7 @@ class CoursesCard extends StatelessWidget {
                   "price": price,
                 },
               );
-            },borderRadius: BorderRadius.circular(16.0),)
+            },borderRadius: BorderRadius.circular(16.0),backgroundColor: AppColors.primaryColor,)
           ],
         ),
       ),

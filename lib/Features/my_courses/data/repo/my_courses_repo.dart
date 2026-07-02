@@ -14,7 +14,9 @@ class MyCoursesRepo{
       .eq("user_id", currentUser.id);
       List<CourseModel> courses =[];
       for(var course in response){
-        courses.add(CourseModel.fromJson(course["courses"]));
+        if (course["courses"] != null) {
+          courses.add(CourseModel.fromJson(course["courses"]));
+        }
       }
       return right(courses);
     }catch (e) {

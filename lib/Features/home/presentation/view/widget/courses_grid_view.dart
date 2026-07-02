@@ -14,7 +14,7 @@ class CoursesGridView extends StatelessWidget {
         crossAxisCount: 2,
         crossAxisSpacing: 14.0,
         mainAxisSpacing: 14.0,
-        childAspectRatio: 2.4 / 4.0,
+        childAspectRatio: 2.3 / 4.0,
       ),
       delegate: SliverChildBuilderDelegate(
             (context, index) {
