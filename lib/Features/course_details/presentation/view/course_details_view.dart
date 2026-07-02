@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:cs_academy_e_learning_app/Features/course_video/presentation/view/course_video_view.dart';
 
 class CourseDetailsView extends StatelessWidget {
   const CourseDetailsView({super.key});
@@ -23,7 +24,11 @@ class CourseDetailsView extends StatelessWidget {
     final String description = args["description"];
     final num price = args["price"];
     return BlocProvider(
-      create: (context) => CourseDetailsCubit(CourseDetailsRepo()),
+      create: (context) => CourseDetailsCubit(CourseDetailsRepo())
+        ..checkEnrollment(
+          courseId: id,
+          userId: Supabase.instance.client.auth.currentUser?.id ?? "",
+        ),
       child: BlocConsumer<CourseDetailsCubit, EnrollState>(
         listener: (context, state) {
           if(state is EnrollFailure) {
@@ -83,22 +88,36 @@ class CourseDetailsView extends StatelessWidget {
                     SizedBox(height: height*0.02,),
                     Text(description, style: AppTheme.textStyle18),
                     SizedBox(height: height*0.02,),
-                    Center(child:SizedBox(
-                      width: MediaQuery.of(context).size.width*0.7,
-                      height: 50,
-                      child: state is EnrollLoading ?
-                      const Center(child: CircularProgressIndicator(),) :CustomBottom(text:
-                    state is AlreadyEnrollState || state is EnrollSuccess ?
-                      "Enrolled" : "Enroll Course ", backgroundColor: Colors.deepPurple,
-                      onPressed: (){
-                      if(state is EnrollInitial ||
-                      state is EnrollFailure || state is NotEnrollState) {
-                        context.read<CourseDetailsCubit>().enrollCourse(
-                          courseId: id,
-                          userId: Supabase.instance.client.auth.currentUser!.id,);
-                      }},
-                      borderRadius: BorderRadius.circular(12.0),width: double.infinity,
-                    ),),),
+                    Center(
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.7,
+                        height: 50,
+                        child: state is EnrollLoading
+                            ? const Center(child: CircularProgressIndicator())
+                            : CustomBottom(
+                                text: state is AlreadyEnrollState || state is EnrollSuccess
+                                    ? "Enrolled"
+                                    : "Enroll Course",
+                                backgroundColor: state is AlreadyEnrollState || state is EnrollSuccess
+                                    ? Colors.green
+                                    : Colors.deepPurple,
+                                onPressed: () {
+                                  if (state is AlreadyEnrollState || state is EnrollSuccess) {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                      return CourseVideoView(courseId: id);
+                                    }));
+                                  } else {
+                                    context.read<CourseDetailsCubit>().enrollCourse(
+                                          courseId: id,
+                                          userId: Supabase.instance.client.auth.currentUser!.id,
+                                        );
+                                  }
+                                },
+                                borderRadius: BorderRadius.circular(12.0),
+                                width: double.infinity,
+                              ),
+                      ),
+                    ),
                   ],
                 ),
               ),

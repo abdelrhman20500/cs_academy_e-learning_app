@@ -1,14 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cs_academy_e_learning_app/Core/theme/app_theme.dart';
+import 'package:cs_academy_e_learning_app/Features/course_video/presentation/view/course_video_view.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../../Core/widgets/custom_bottom.dart';
 
 class MyCoursesCard extends StatelessWidget {
-  const MyCoursesCard({super.key, required this.imageUrl, required this.title,});
+  const MyCoursesCard({super.key, required this.imageUrl, required this.title, required this.id,});
   final String imageUrl;
   final String title;
+  final String id;
   @override
   Widget build(BuildContext context) {
     var height= MediaQuery.of(context).size.height;
@@ -57,7 +59,11 @@ class MyCoursesCard extends StatelessWidget {
                 SizedBox(height: height*0.02,),
                 CustomBottom(text: "Complete Course",
                   borderRadius: BorderRadius.circular(16), backgroundColor: Colors.deepPurple,
-                  onPressed: (){},)
+                  onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context){
+                    return CourseVideoView(courseId: id);
+                  }));
+                  },)
               ],
             )
           ],

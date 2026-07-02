@@ -19,6 +19,7 @@ class CourseDetailsCubit extends Cubit<EnrollState> {
 
   Future<void> checkEnrollment(
       {required String courseId, required String userId}) async {
+    emit(EnrollLoading());
     final result = await courseDetailsRepo.checkEnrollment(
         courseId: courseId, userId: userId);
     result.fold((e) {
